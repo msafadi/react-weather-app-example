@@ -1,25 +1,49 @@
-import logo from './logo.svg';
+import { Component } from 'react';
 import './App.css';
+import Search from './Search';
+import WeatherCard from './WeatherCard';
+import WeatherForecast from './WeatherForecast';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.props = props;
+    this.state = {
+      city: "London"
+    }
+
+    //this.handleSearch = this.handleSearch.bind(this);
+  }
+
+  handleSearch(e) {
+    e.preventDefault();
+    this.setState({
+      city: document.querySelector('form [name=city]').value
+    })
+  }
+
+  render() {
+    return (
+      <div className="App container">
+        <div className="row">
+          <div className="col-md-12">
+            <Search handleSearch={this.handleSearch.bind(this)} />
+          </div>
+          <div className="col-md-6">
+            <WeatherCard />
+          </div>
+          <div className="col-md-6">
+            <WeatherCard city={this.state.city} />
+          </div>
+        </div>
+        <hr />
+        <div>
+          <WeatherForecast city={this.state.city} />
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
